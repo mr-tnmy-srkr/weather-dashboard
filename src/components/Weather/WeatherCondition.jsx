@@ -52,7 +52,7 @@ const WeatherCondition = () => {
         <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
           <span>Wind</span>
           <div className="inline-flex space-x-4">
-            <p>{Math.round(wind)}km/h</p>
+            <p>{wind}km/h</p>
             <img src={WindIcon} alt="wind" />
           </div>
         </li>
