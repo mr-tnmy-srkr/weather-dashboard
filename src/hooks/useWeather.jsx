@@ -22,7 +22,6 @@ const useWeather = () => {
   const [error, setError] = useState(null);
 
   // const { selectedLocation } = useContext(LocationContext);
-  const { selectedLocation } = {}
 
   const fetchWeatherData = async (latitude, longitude) => {
     try {
@@ -33,9 +32,7 @@ const useWeather = () => {
       });
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
-          import.meta.env.VITE_WEATHER_API_KEY
-        }&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
       );
 
       if (!response.ok) {
@@ -73,26 +70,19 @@ const useWeather = () => {
 
   useEffect(() => {
     setLoading({
-        ...loading,
-        state: true,
-        message: "Finding location...",
+      ...loading,
+      state: true,
+      message: "Finding location...",
     });
 
-    if (selectedLocation.latitude && selectedLocation.longitude) {
-        fetchWeatherData(
-            selectedLocation.latitude,
-            selectedLocation.longitude
-        );
-    } else {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            fetchWeatherData(
-                position.coords.latitude,
-                position.coords.longitude
-            );
-        });
-    }
-}, [selectedLocation.latitude, selectedLocation.longitude]);
-
+    /* if (selectedLocation.latitude && selectedLocation.longitude) {
+      fetchWeatherData(selectedLocation.latitude, selectedLocation.longitude);
+    } else { */
+    navigator.geolocation.getCurrentPosition(function (position) {
+      fetchWeatherData(position.coords.latitude, position.coords.longitude);
+    });
+    // }
+  }, []);
 
   return { weatherData, error, loading };
 };

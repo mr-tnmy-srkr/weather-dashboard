@@ -1,2 +1,2 @@
-import useWeather from "./useWeather"
-export { useWeather}
+import useWeather from "./useWeather";
+export { useWeather };
