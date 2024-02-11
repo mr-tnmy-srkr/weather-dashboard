@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../context";
 
 const useWeather = () => {
@@ -86,7 +86,7 @@ const useWeather = () => {
         fetchWeatherData(position.coords.latitude, position.coords.longitude);
       });
     }
-  }, []);
+  }, [selectedLocation.latitude, selectedLocation.longitude]);
 
   return { weatherData, error, loading };
 };
