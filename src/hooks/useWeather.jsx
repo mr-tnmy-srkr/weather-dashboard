@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LocationContext } from "../context";
 
 const useWeather = () => {
   const [weatherData, setWeatherData] = useState({
@@ -21,7 +22,8 @@ const useWeather = () => {
 
   const [error, setError] = useState(null);
 
-  // const { selectedLocation } = useContext(LocationContext);
+  const { selectedLocation } = useContext(LocationContext);
+  // console.log(selectedLocation);
 
   const fetchWeatherData = async (latitude, longitude) => {
     try {
@@ -32,7 +34,9 @@ const useWeather = () => {
       });
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
+          import.meta.env.VITE_WEATHER_API_KEY
+        }&units=metric`
       );
 
       if (!response.ok) {
@@ -75,13 +79,13 @@ const useWeather = () => {
       message: "Finding location...",
     });
 
-    /* if (selectedLocation.latitude && selectedLocation.longitude) {
+    if (selectedLocation.latitude && selectedLocation.longitude) {
       fetchWeatherData(selectedLocation.latitude, selectedLocation.longitude);
-    } else { */
-    navigator.geolocation.getCurrentPosition(function (position) {
-      fetchWeatherData(position.coords.latitude, position.coords.longitude);
-    });
-    // }
+    } else {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        fetchWeatherData(position.coords.latitude, position.coords.longitude);
+      });
+    }
   }, []);
 
   return { weatherData, error, loading };
